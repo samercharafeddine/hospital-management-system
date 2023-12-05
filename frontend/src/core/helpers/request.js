@@ -11,6 +11,7 @@ const sendRequest = async ({ route, body, method = "GET" }) => {
       data: body,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: localStorage.getItem("token"),
       },
     });
 
@@ -19,3 +20,5 @@ const sendRequest = async ({ route, body, method = "GET" }) => {
     console.log(error);
   }
 };
+
+export { sendRequest };

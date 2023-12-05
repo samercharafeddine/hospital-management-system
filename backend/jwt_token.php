@@ -1,5 +1,7 @@
 <?php
-   function Sign($payload, $key)
+ 
+ 
+ function Sign($payload, $key)
   {
     $header = ['alg' => 'HS256', 'type' => 'JWT'];
     $header_encoded = base64_encode(json_encode($header));

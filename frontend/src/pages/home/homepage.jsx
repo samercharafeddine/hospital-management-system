@@ -4,9 +4,6 @@ import axios from "axios";
 import { sendRequest } from "../../core/helpers/request.js";
 
 const Homepage = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-
   const [data, setData] = useState({
     username: "",
     password: "",
