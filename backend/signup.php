@@ -1,26 +1,32 @@
 <?php
-header('Access-Controll-Allow-Origin:*');
 include("connection.php");
 
-$email = $_POST['email'];
-$password = $_POST['password'];
-$id_usertype = 0;
-$name = $_POST['name'];
-$last_name = $_POST['last_name'];
+if (isset($_POST['email'], $_POST['password'], $_POST['username'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $username = $_POST['username'];
 
-function createToken($email,$password){
-    $key = '123';
-    $payload = ['email'=> $email, 'password'=> $password];
-    $jwt = Sign($payload, $key);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = $mysqli->prepare('INSERT INTO users (email, password, username) VALUES (?, ?, ?)');
+    
+    if (!$query) {
+        die("Error in query preparation: " . $mysqli->error);
+    }
+
+    $query->bind_param('sss', $email, $hashed_password, $username);
+    $query->execute();
+
+    if ($query->error) {
+        die("Error in query execution: " . $query->error);
+    }
+
+    $response = ["status" => "true"];
+    echo json_encode($response);
+
+    $query->close();
+} else {
+    $response = ["status" => "false", "error" => "Missing required data"];
+    echo json_encode($response);
 }
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-$query = $mysqli->prepare('insert into users(email,password,usertype_id,name,last_name) 
-values(?,?,?,?,?)');
-$query->bind_param('ssiss', $email, $hashed_password, $id_usertype, $name, $last_name);
-$query->execute();
-
-$response = [];
-$response["status"] = "true";
-
-echo json_encode($response);
+?>
