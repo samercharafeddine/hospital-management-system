@@ -3,7 +3,7 @@ header('Access-Controll-Allow-Origin:*');
 include("connection.php");
 $email = $_POST['email'];
 $password = $_POST['password'];
-$query=$mysqli->prepare('select id_user,name,password from users where email=?');
+$query=$mysqli->prepare('select user_id,name,password from users where email=?');
 $query->bind_param('s',$email);
 $query->execute();
 $query->store_result();
