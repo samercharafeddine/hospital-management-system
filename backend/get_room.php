@@ -1,6 +1,7 @@
 <?php
 include("connection.php");
 include("./backend/jwt_token.php");
+
 $token_validation = Verify($headers["Authorization"], '123' );
 
 
