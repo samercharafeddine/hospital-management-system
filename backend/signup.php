@@ -8,9 +8,14 @@ $id_usertype = 0;
 $name = $_POST['name'];
 $last_name = $_POST['last_name'];
 
+function createToken($email,$password){
+    $key = '123';
+    $payload = ['email'=> $email, 'password'=> $password];
+    $jwt = Sign($payload, $key);
+}
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-$query = $mysqli->prepare('insert into users(email,password,id_usertype,name,last_name) 
+$query = $mysqli->prepare('insert into users(email,password,usertype_id,name,last_name) 
 values(?,?,?,?,?)');
 $query->bind_param('ssiss', $email, $hashed_password, $id_usertype, $name, $last_name);
 $query->execute();
