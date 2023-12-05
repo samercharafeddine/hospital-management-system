@@ -1,20 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "./homepage.css";
 import axios from "axios";
+import { sendRequest } from "../../core/helpers/request.js";
 
 const Homepage = () => {
-  const [username, setUsername] = useState(0);
-  const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
 
-  const login = async (e) => {
-    e.preventDefault();
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:80/Hospital-Management-System/server/signin.php",
-        {
-          username,
-          password,
-        }
-      );
+      const response = sendRequest({
+        route: "/signin.php",
+        methode: "POST",
+      });
       const result = response.data;
       console.log(result);
     } catch (error) {
@@ -22,28 +25,33 @@ const Homepage = () => {
     }
   };
 
-  return (
-    <div className="login-container flex column center">
-      <form action="" method="POST" onSubmit={login}>
-        <div className="input">
-          <p>UserID</p>
-          <input
-            type="text"
-            className="input-field"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div className="input">
-          <p>Password</p>
-          <input
-            type="password"
-            className="input-field"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+  const handleForm = (field, value) => {
+    setData((prev) => {
+      return {
+        [field]: value,
+        ...prev,
+      };
+    });
+  };
 
-        <input type="submit" value="Sign In" className="login-btn" />
-      </form>
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <input
+        type="text"
+        placeholder="Username"
+        onChange={(e) => handleForm("email", e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => handleForm("email", e.target.value)}
+      />
+      <button onClick={handleLogin}>Login</button>
     </div>
   );
 };

@@ -1,6 +1,9 @@
 .login-container {
   height: 100vh;
-  flex-basis: 50%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
