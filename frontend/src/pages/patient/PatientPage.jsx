@@ -1,12 +1,7 @@
 import React from "react";
-import Navbar from "../../components/navbar/navbar";
 
 function PatientPage() {
-  return (
-    <div>
-      <Navbar />
-    </div>
-  );
+  return <div>test</div>;
 }
 
 export default PatientPage;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./homepage.css";
+import "../styles/utilities.css";
 import axios from "axios";
 import { sendRequest } from "../../core/helpers/request.js";
 
@@ -36,7 +37,7 @@ const Homepage = () => {
   }, [data]);
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <input
         type="text"
